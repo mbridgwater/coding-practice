@@ -39,7 +39,7 @@ def build_tree(files):
 
 def pre_order_traversal_dict(dict_tree, level=0):
     for child in dict_tree:
-        print(level * "  " + "--" + child)
+        print(level * "  " + "-- " + child)
         pre_order_traversal_dict(dict_tree[child], level + 1)
 
 
@@ -82,7 +82,7 @@ class FileSystem:
 
     def _preorder_dfs_traversal(self, node, level=0):
         for child in node.children:
-            print("  " * level, "--", child.file_name)
+            print(level * "  " + "-- " + child.file_name)
             self._preorder_dfs_traversal(child, level + 1)
 
     def print_filesystem(self):
@@ -95,9 +95,14 @@ if __name__ == "__main__":
         "/webapp/assets/html/b.html",
         "/webapp/assets/js/c.js",
         "/webapp/entrypoint.txt",
+        "/webapp2/entrypoint.txt",
+        "/webapp3/assets/entrypoint.txt",
     ]
-    # my_dict = build_tree(files)
-    # print(my_dict)
-    # pre_order_traversal_dict(my_dict)
+    my_dict = build_tree(files)
+    print(my_dict)
+    pre_order_traversal_dict(my_dict)
+    print()
+    print("next version, next is node one")
+    print()
     fs = FileSystem(files)
     fs.print_filesystem()
