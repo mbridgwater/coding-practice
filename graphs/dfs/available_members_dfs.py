@@ -24,23 +24,27 @@ Output: ["Thunders","Warriors","Rebooters"]
 def full_availability(TeamsToSupporterMap, FolksAvailable):
     res = []
 
-    def dfs(team, TeamsToSupporterMap):
+    def dfs(team, seen):
         # root = team
-        # if team not in seen:
-        for supporter in TeamsToSupporterMap[team]:
+        # if team in seen:
+        #     return False  # cycle detected
+        # seen.add(team)
+
+        for supporter in TeamsToSupporterMap.get(team, []):
             if supporter in TeamsToSupporterMap:
                 # this support is a team, so recursively call dfs
-                dfs(supporter, TeamsToSupporterMap)  # seen.add(supporter)
-            else:
-                if supporter in FolksAvailable:
-                    return True
-                else:
+                if not dfs(supporter, TeamsToSupporterMap):  # seen.add(supporter)
                     return False
+            else:
+                if supporter not in FolksAvailable:
+                    return False
+        # seen = set()
+        return True
         # return False
 
     for team in TeamsToSupporterMap:
-        # seen = set()
-        if dfs(team, TeamsToSupporterMap):
+        seen = set()
+        if dfs(team, seen):
             res.append(team)
 
     return res
